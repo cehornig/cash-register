@@ -1,0 +1,94 @@
+.row-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    padding: 20px;
+    
+    max-width: 600px;
+    
+    margin: auto;
+}
+
+.bill {
+    height: 293px;
+    width: 125px;
+    background: #688e74;
+    margin: 0px 10px;
+}
+
+.bill-text {
+    height: inherit;
+    width: inherit;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    font-size: 50px;
+    color: #b0c1b0;
+}
+
+.penny {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    height: 45px;
+    width: 45px;
+    
+    border-radius: 50px;
+    
+    background: #a56b42;
+}
+
+.nickel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    height: 55px;
+    width: 55px;
+    
+    border-radius: 50px;
+    
+    background: silver;
+}
+
+.dime {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    height: 40px;
+    width: 40px;
+    
+    border-radius: 50px;
+    
+    background: silver;
+}
+
+.quarter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    height: 70px;
+    width: 70px;
+    
+    border-radius: 50px;
+    
+    background: silver;
+}
+
+.coin-text {
+    font-size: 20px;
+    
+    color: #5d5f60;
+}
+
+.penny .coin-text {
+    font-size: 20px;
+    
+    color: #d8cfb1;
+}
