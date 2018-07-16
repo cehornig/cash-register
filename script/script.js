@@ -6,8 +6,8 @@ function checkCashRegister(price, cash, cid) {
     
     var changeArr = [],
         changeDue = cash - price,
-        changeSum,
         cidSum = 0,
+        changeSum = 0,
         currentIndex = cid.length - 1;
     
     function getNumberOfUnits(unit) {
@@ -56,14 +56,21 @@ function checkCashRegister(price, cash, cid) {
         cidSum += subArr[1];
     });
 
-    if (changeSum < changeDue) {
+    if (changeDue > 0) {
         return {status: "INSUFFICIENT_FUNDS", change: []};
     }
 
-    if (cash - price === cidSum) {
+    if (Math.round((cash - price) * 1000) === Math.round(cidSum * 1000)) {
         return {status: "CLOSED", change: cid};
     }
 
     return {status: "OPEN", change: changeArr};
 
 }
+
+
+
+
+
+
+

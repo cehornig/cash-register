@@ -2,77 +2,220 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">.
-        <link rel="stylesheet" type="text/css" href="css/styles.css">        
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">  
+        <script type="text/javascript" src="script/script.js"></script>
         <title>JavaScript Cash Register</title>
     </head>
     <body>
-        <div class="row-wrapper">
-            <div class="unit-wrapper">
-                <div class="bill">
-                    <span class="bill-text">$1</span>
+        <h1>JavaScript Cash Register</h1>
+        <span class="subtitle">Based on the JavaScript cash register project from freeCodeCamp</span>
+        <span class="instructions">Instructions:<br><br>Enter the price of the item, the contents of your cash register, and the change given by the customer below.  All values should be in dollars; for example, if you have 50 pennies, enter 0.5 in the PENNY category of the cash register input.  If you enter an impossible value--for example, $10 worth of $20 bills--the cash register function will return an error.  Otherwise, it will return the change due in the correct denominations, and whether the cash register has been emptied.  If it can't return enough change, it will return "INSUFFICIENT FUNDS" instead.</span>
+        <form id="entry-form">
+            <div class="grid">
+                <label class="left-col" for="price">
+                    PRICE:
+                </label>
+                <div class="right-col">
+                    <input type="number" name="price" id="price" value="0" onclick="turnWhite(this)">
                 </div>
-                <div class="counter-wrapper">
+                <label class="left-col" for="price">
+                    CHANGE:
+                </label>
+                <div class="right-col">
+                    <input type="number" name="change" id="change" value="0" onclick="turnWhite(this)">
+                </div>
+                <label class="left-col" for="pennies">
+                    PENNY:
+                </label>
+                <div class="right-col">
+                    <input type="number" name="penny" id="penny" value="0" onclick="turnWhite(this)">
+                </div>
+                <label class="left-col" for="nickel">
+                    NICKEL:
+                </label>
+                <div class="right-col">
+                    <input type="number" name="nickel" id="nickel" value="0" onclick="turnWhite(this)">
+                </div>        
+                <label class="left-col" for="dime">
+                    DIME:
+                </label>
+                <div class="right-col">
+                    <input type="number" name="dime" id="dime" value="0" onclick="turnWhite(this)">
+                </div>
+                <label class="left-col" for="quarter">
+                    QUARTER:
+                </label>
+                <div class="right-col">
+                    <input type="number" name="quarter" id="quarter" value="0" onclick="turnWhite(this)">
+                </div>
+                <label class="left-col" for="one">
+                    $1 BILL:
+                </label>
+                <div class="right-col">
+                    <input type="number" name="one" id="one" value="0" onclick="turnWhite(this)">
+                </div>
+                <label class="left-col" for="five">
+                    $5 BILL:
+                </label>
+                <div class="right-col">
+                    <input type="number" name="five" id="five" value="0" onclick="turnWhite(this)">
+                </div>
+                <label class="left-col" for="ten">
+                    $10 BILL:
+                </label>
+                <div class="right-col">
+                    <input type="number" name="ten" id="ten" value="0" onclick="turnWhite(this)">
+                </div>
+                <label class="left-col" for="twenty">
+                    $20 BILL:
+                </label>
+                <div class="right-col">
+                    <input type="number" name="twenty" id="twenty" value="0" onclick="turnWhite(this)">
+                </div>
+                <label class="left-col" for="hundred">
+                    $100 BILL:
+                </label>
+                <div class="right-col">
+                    <input type="number" name="hundred" id="hundred" value="0" onclick="turnWhite(this)">
                 </div>
             </div>
-            <div class="unit-wrapper">
-                <div class="bill">
-                    <span class="bill-text">$5</span>
-                </div>
-                <div class="counter-wrapper">
-                </div>
+            <div class="submit-wrapper">
+                <input type="button" value="Submit" onclick="getResults()">
             </div>
-            <div class="unit-wrapper">
-                <div class="bill">
-                    <span class="bill-text">$10</span>
-                </div>
-                <div class="counter-wrapper">
-                </div>
-            </div>
-            <div class="unit-wrapper">
-                <div class="bill">
-                    <span class="bill-text">$20</span>
-                </div>
-                <div class="counter-wrapper">
-                </div>
-            </div>
-            <div class="unit-wrapper">
-                <div class="bill">
-                    <span class="bill-text">$100</span>
-                </div>
-                <div class="counter-wrapper">
-                </div>
-            </div>
+        </form>
+        <div class="result-div" id="result-div">
+            RESULTS WILL APPEAR HERE:
         </div>
-        <div class="row-wrapper">
-            <div class="unit-wrapper">
-                <div class="penny">
-                    <span class="coin-text">1&cent;</span>
-                </div>
-                <div class="counter-wrapper">
-                </div>
-            </div>
-            <div class="unit-wrapper">
-                <div class="nickel">
-                    <span class="coin-text">5&cent;</span>
-                </div>
-                <div class="counter-wrapper">
-                </div>
-            </div>
-            <div class="unit-wrapper">
-                <div class="dime">
-                    <span class="coin-text">10&cent;</span>
-                </div>
-                <div class="counter-wrapper">
-                </div>
-            </div>
-            <div class="unit-wrapper">
-                <div class="quarter">
-                    <span class="coin-text">25&cent;</span>
-                </div>
-                <div class="counter-wrapper">
-                </div>
-            </div>
-        </div>
+        <script>
+            function turnWhite (elem) {
+                elem.style.background ="white";
+            }
+            
+            function getResults () {
+                var price = document.getElementById("price").value,
+                    change = document.getElementById("change").value,
+                    
+                    penny = document.getElementById("penny").value,
+                    pennyUnit = 0.01,
+                    
+                    nickel = document.getElementById("nickel").value,
+                    nickelUnit = 0.05,
+                    
+                    dime = document.getElementById("dime").value,
+                    dimeUnit = 0.1,
+                    
+                    quarter = document.getElementById("quarter").value,
+                    quarterUnit = 0.25,
+                    
+                    one = document.getElementById("one").value,
+                    oneUnit = 1,
+                    
+                    five = document.getElementById("five").value,
+                    fiveUnit = 5,
+                    
+                    ten = document.getElementById("ten").value,
+                    tenUnit = 10,
+                    
+                    twenty = document.getElementById("twenty").value,
+                    twentyUnit = 20,
+                    
+                    hundred = document.getElementById("hundred").value,
+                    hundredUnit = 100,
+                
+                    cid = [["penny", penny, pennyUnit], ["nickel", nickel, nickelUnit], ["dime", dime, dimeUnit], ["quarter", quarter, quarterUnit], ["one", one, oneUnit], ["five", five, fiveUnit], ["ten", ten, tenUnit], ["twenty", twenty, twentyUnit], ["hundred", hundred, hundredUnit]],
+                    
+                    resultDiv = document.getElementById("result-div"),
+                    
+                    error = false,
+                    html = "<div class='grid'>",
+                
+                    results = checkCashRegister(price, change, cid),
+                    status = results.status,
+                    resultArr = results.change;
+                
+                console.log(results);
+                
+                if (!Number.isInteger(price * 100) || price <= 0) {
+                    document.getElementById("price").style.background = "red";
+                        if (!error) {
+                            error = true;
+                        } 
+                    }
+                
+                if (!Number.isInteger(change * 100) || change <= 0) {
+                    document.getElementById("change").style.background = "red";
+                        if (!error) {
+                            error = true;
+                        } 
+                    }
+                
+                if (Number(change) < Number(price) || status == "INSUFFICIENT_FUNDS") {
+                        if (!error) {
+                            error = true;
+                        }
+                    }
+                    
+                cid.forEach(function (item) {
+                    if (!Number.isInteger((item[1] * 1000) / (item[2] * 1000))) {
+                        document.getElementById(item[0]).style.background = "red";
+                            
+                        if (!error) {
+                            error = true;
+                        } 
+                    } 
+                });
+                
+                if (error == true) {
+                    resultDiv.style.color = "red";
+                        
+                    if (Number(change) == 0 && Number(price) == 0) {
+                        resultDiv.innerHTML = "INVALID INPUT: <br> PRICE AND CHANGE CANNOT BE 0";
+                        return;
+                    }
+                        
+                    if (Number(change) == 0) {
+                        resultDiv.innerHTML = "INVALID INPUT: <br> CHANGE CANNOT BE 0";
+                        return;
+                    }
+                            
+                    if (Number(price) == 0) {
+                        resultDiv.innerHTML = "INVALID INPUT: <br> PRICE CANNOT BE 0";
+                        return;
+                    }
+                        
+                    if (Number(change) < Number(price)) {
+                        resultDiv.innerHTML = "INVALID INPUT: <br> NOT ENOUGH CHANGE"
+                        return;
+                    }
+                        
+                    if (status == "INSUFFICIENT_FUNDS") {
+                        resultDiv.innerHTML = "INSUFFICIENT FUNDS";
+                        return;
+                    }
+                }
+                
+                resultDiv.style.color = "black";
+                
+                if (resultArr.length == 0) {
+                    resultDiv.innerHTML = "CHANGE DUE: 0";
+                    return;
+                }
+                
+                resultArr.forEach(function (item){
+                    html += "<div class='left-col'>" + item[0].toUpperCase() + ":</div><div class='right-col'>$" + item[1] + "</div>";
+                });
+                
+                html += "</div>";
+                
+                if (status == "CLOSED") {
+                    html += "<br>CASH REGISTER EMPTY";
+                    resultDiv.innerHTML = "CHANGE DUE: <br><br>" + html;
+                    return;
+                }
+                
+                resultDiv.innerHTML = "CHANGE DUE: <br><br>" + html + "<br>CASH REGISTER OPEN";
+            }
+        </script>
     </body>
 </html>
