@@ -7,17 +7,17 @@ function checkCashRegister(price, cash, cid) {
     var changeArr = [],
         changeDue = cash - price,
         cidSum = 0,
-        changeSum = 0,
         currentIndex = cid.length - 1;
     
     function getNumberOfUnits(unit) {
-        if (changeDue < unit) {
+        
+        if (changeDue < unit || cid[currentIndex][1] == 0) {
             if (currentIndex > 0) {
                 currentIndex--;
             }
             return;
         }
-
+        
         var numberOfUnits = Math.floor(changeDue / unit);
 
         if (numberOfUnits * unit > cid[currentIndex][1]) {
@@ -28,7 +28,7 @@ function checkCashRegister(price, cash, cid) {
             }
             return;
         }
-
+        
         changeArr.push([cid[currentIndex][0], numberOfUnits * unit]);
         changeDue = Math.round((100 * (changeDue - (numberOfUnits * unit)))) / 100;
 
@@ -48,14 +48,10 @@ function checkCashRegister(price, cash, cid) {
     getNumberOfUnits(0.05);
     getNumberOfUnits(0.01);
 
-    changeArr.forEach(function (subArr) {
-        changeSum += subArr[1];
-    });
-
     cid.forEach(function (subArr) {
-        cidSum += subArr[1];
+        cidSum += Number(subArr[1]);
     });
-
+    
     if (changeDue > 0) {
         return {status: "INSUFFICIENT_FUNDS", change: []};
     }

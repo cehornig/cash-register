@@ -10,7 +10,7 @@
     <body>
         <h1>JavaScript Cash Register</h1>
         <span class="subtitle">Based on the JavaScript cash register project from freeCodeCamp</span>
-        <span class="instructions">Instructions:<br><br>Enter the price of the item, the contents of your cash register, and the change given by the customer below.  All values should be in dollars; for example, if you have 50 pennies, enter 0.5 in the PENNY category of the cash register input.  If you enter an impossible value--for example, $10 worth of $20 bills--the cash register function will return an error.  Otherwise, it will return the change due in the correct denominations, and whether the cash register has been emptied.  If it can't return enough change, it will return "INSUFFICIENT FUNDS" instead.</span>
+        <span class="instructions">Instructions:<br><br>Enter the price of the item, the contents of your cash register, and the payment given by the customer below.  All values must be in dollars.  For example, if you have 50 pennies, enter 0.5 in the PENNY category of the cash register input.  If you enter an impossible value--for example, $10 worth of $20 bills--the cash register function will return an error.  Otherwise, it will return the change due in the correct denominations, and whether the cash register has been emptied.  If it can't return enough change, it will return "INSUFFICIENT FUNDS" instead.</span>
         <form id="entry-form">
             <div class="grid">
                 <label class="left-col" for="price">
@@ -20,7 +20,7 @@
                     <input type="number" name="price" id="price" value="0" onclick="turnWhite(this)">
                 </div>
                 <label class="left-col" for="price">
-                    CHANGE:
+                    PAYMENT:
                 </label>
                 <div class="right-col">
                     <input type="number" name="change" id="change" value="0" onclick="turnWhite(this)">
@@ -85,7 +85,7 @@
             </div>
         </form>
         <div class="result-div" id="result-div">
-            RESULTS WILL APPEAR HERE:
+            RESULTS WILL APPEAR HERE
         </div>
         <script>
             function turnWhite (elem) {
@@ -128,13 +128,11 @@
                     resultDiv = document.getElementById("result-div"),
                     
                     error = false,
-                    html = "<div class='grid'>",
+                    html = "",
                 
                     results = checkCashRegister(price, change, cid),
                     status = results.status,
                     resultArr = results.change;
-                
-                console.log(results);
                 
                 if (!Number.isInteger(price * 100) || price <= 0) {
                     document.getElementById("price").style.background = "red";
@@ -162,37 +160,34 @@
                             
                         if (!error) {
                             error = true;
-                        } 
-                    } 
+                        }
+                    }
                 });
                 
                 if (error == true) {
+                    html = "INVALID INPUT";
+                    
                     resultDiv.style.color = "red";
-                        
-                    if (Number(change) == 0 && Number(price) == 0) {
-                        resultDiv.innerHTML = "INVALID INPUT: <br> PRICE AND CHANGE CANNOT BE 0";
-                        return;
-                    }
-                        
+                    
                     if (Number(change) == 0) {
-                        resultDiv.innerHTML = "INVALID INPUT: <br> CHANGE CANNOT BE 0";
-                        return;
+                        html+= "<br>CHANGE CANNOT BE 0";
                     }
                             
                     if (Number(price) == 0) {
-                        resultDiv.innerHTML = "INVALID INPUT: <br> PRICE CANNOT BE 0";
-                        return;
+                        html+= "<br>PRICE CANNOT BE 0";
                     }
                         
                     if (Number(change) < Number(price)) {
-                        resultDiv.innerHTML = "INVALID INPUT: <br> NOT ENOUGH CHANGE"
-                        return;
+                        html+= "<br>NOT ENOUGH CHANGE"
                     }
                         
                     if (status == "INSUFFICIENT_FUNDS") {
-                        resultDiv.innerHTML = "INSUFFICIENT FUNDS";
-                        return;
+                        html = "INSUFFICIENT FUNDS";
                     }
+                    
+                    resultDiv.innerHTML = html;
+                    
+                    return;
                 }
                 
                 resultDiv.style.color = "black";
@@ -202,19 +197,21 @@
                     return;
                 }
                 
+                html = "<div class='grid'>";
+                
                 resultArr.forEach(function (item){
-                    html += "<div class='left-col'>" + item[0].toUpperCase() + ":</div><div class='right-col'>$" + item[1] + "</div>";
+                    html += "<div class='left-col'>" + item[0].toUpperCase() + ":</div><div class='right-col'>$" + Number(item[1]).toFixed(2) + "</div>";
                 });
                 
                 html += "</div>";
                 
                 if (status == "CLOSED") {
                     html += "<br>CASH REGISTER EMPTY";
-                    resultDiv.innerHTML = "CHANGE DUE: <br><br>" + html;
+                    resultDiv.innerHTML = "CHANGE DUE:<br><br>" + html;
                     return;
                 }
                 
-                resultDiv.innerHTML = "CHANGE DUE: <br><br>" + html + "<br>CASH REGISTER OPEN";
+                resultDiv.innerHTML = "CHANGE DUE:<br><br>" + html + "<br>CASH REGISTER OPEN";
             }
         </script>
     </body>
